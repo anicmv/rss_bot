@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: rss_bot
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://your_db_host:your_db_port/rss_bot?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+    username: your_db_username
+    password: your_db_password
+  flyway:
+    locations: classpath:db
+    enabled: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      retries: 3
+    consumer:
+      group-id: rss_bot_group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+server:
+  port: 6666
+
+bot:
+  token: your_bot_token
+  username: your_chat_id
+  retry: 3
+  cron: "*/59 * * * * ?"
+
